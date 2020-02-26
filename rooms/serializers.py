@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from users.serializers import UserSerializer
 from .models import Room, Photo
 
@@ -21,10 +22,10 @@ class RoomSerializer(serializers.ModelSerializer):
         read_only_fields = ("user", "id", "created", "updated")
 
     def validate(self, data):
-        if self.instance:
+        if self.instance:  # update
             check_in = data.get("check_in", self.instance.check_in)
             check_out = data.get("check_out", self.instance.check_out)
-        else:
+        else:  # create
             check_in = data.get("check_in")
             check_out = data.get("check_out")
         if check_in == check_out:
